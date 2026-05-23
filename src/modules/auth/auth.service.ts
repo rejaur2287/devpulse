@@ -42,10 +42,11 @@ const loginUserIntoDB = async (payLoad: {
     throw new Error("Invalid credentials");
   }
   const user = userData.rows[0];
-  console.log(user);
+
+  // console.log(user);
 
   const matchPassword = await bcrypt.compare(password, user.password);
-  console.log(matchPassword);
+  // console.log(matchPassword);
   if (!matchPassword) {
     throw new Error("Invalid credentials");
   }
@@ -65,7 +66,9 @@ const loginUserIntoDB = async (payLoad: {
 
   // console.log(accessToken);
 
-  return { accessToken };
+  delete user.password;
+
+  return { accessToken, user };
 };
 
 export const authService = {
