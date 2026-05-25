@@ -16,8 +16,12 @@ router.get(
   // auth(User_Role.contributor, User_Role.maintainer),
   issuesController.getAllIssues,
 );
-// router.get("/:id", issuesController.getSingleIssue);
-// router.put("/:id", issuesController.updateAnIssue);
+router.get("/:id", issuesController.getSingleIssue);
+router.patch(
+  "/:id",
+  auth(User_Role.contributor, User_Role.maintainer),
+  issuesController.updateAnIssue,
+);
 // router.delete("/:id", issuesController.deleteIssue);
 
 export const issuesRoute = router;

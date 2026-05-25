@@ -52,59 +52,59 @@ const getAllIssues = async (req: Request, res: Response) => {
   }
 };
 
-// const getSingleIssue = async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   try {
-//     const result = await issueService.getSingleIssueFromDB(id as string);
-//     if (result.rows.length === 0) {
-//       res.status(404).json({
-//         success: false,
-//         message: "User not found in DB.",
-//         data: {},
-//       });
-//     }
-//     res.status(200).json({
-//       success: true,
-//       message: `User ${id} retrieved successfully.`,
-//       data: result.rows[0],
-//     });
-//   } catch (error: any) {
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//       error: error,
-//     });
-//   }
-// };
+const getSingleIssue = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const result = await issueService.getSingleIssueFromDB(id as string);
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: "Issue not found in DB.",
+        data: {},
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: `Issue ${id} retrieved successfully.`,
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+};
 
-// const updateAnIssue = async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   // const { name, password, age, is_active } = req.body;
+const updateAnIssue = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  // const { name, password, age, is_active } = req.body;
 
-//   try {
-//     const result = await issueService.updateAnIssueInDB(req.body, id as string);
-//     if (result.rows.length === 0) {
-//       res.status(404).json({
-//         success: false,
-//         message: "User not found in DB.",
-//       });
-//     }
-//     res.status(200).json({
-//       success: true,
-//       message: `User ${id} updated successfully.`,
-//       data: result.rows[0],
-//     });
-//   } catch (error: any) {
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//       error: error,
-//     });
-//   }
-//   // console.log(result);
-//   // console.log(id);
-//   // console.log({ name, password, age, is_active });
-// };
+  try {
+    const result = await issueService.updateAnIssueInDB(req.body, id as string);
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: "Issue not found in DB.",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: `Issue ${id} updated successfully.`,
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+  // console.log(result);
+  // console.log(id);
+  // console.log({ name, password, age, is_active });
+};
 
 // const deleteIssue = async (req: Request, res: Response) => {
 //   const { id } = req.params;
@@ -134,7 +134,7 @@ const getAllIssues = async (req: Request, res: Response) => {
 export const issuesController = {
   createIssue,
   getAllIssues,
-  // getSingleIssue,
-  // updateAnIssue,
+  getSingleIssue,
+  updateAnIssue,
   // deleteIssue,
 };
