@@ -32,23 +32,25 @@ const createIssue = async (req: Request, res: Response) => {
   }
 };
 
-// const getAllIssues = async (req: Request, res: Response) => {
-//   //   console.log("Controller:", req.user);
-//   try {
-//     const result = await issueService.getAllIssuesFromDB();
-//     res.status(200).json({
-//       success: true,
-//       message: "Users retrieved successfully.",
-//       data: result.rows,
-//     });
-//   } catch (error: any) {
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//       error: error,
-//     });
-//   }
-// };
+const getAllIssues = async (req: Request, res: Response) => {
+  //   console.log("Controller:", req.user);
+  try {
+    const result = await issueService.getAllIssuesFromDB(
+      req.query.sort as string,
+    );
+    res.status(200).json({
+      success: true,
+      message: "Issues retrieved successfully.",
+      data: result.rows,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
+  }
+};
 
 // const getSingleIssue = async (req: Request, res: Response) => {
 //   const { id } = req.params;
@@ -131,7 +133,7 @@ const createIssue = async (req: Request, res: Response) => {
 // };
 export const issuesController = {
   createIssue,
-  // getAllIssues,
+  getAllIssues,
   // getSingleIssue,
   // updateAnIssue,
   // deleteIssue,

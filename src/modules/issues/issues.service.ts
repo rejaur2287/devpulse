@@ -2,39 +2,12 @@
 import { pool } from "../../db";
 import type { IIssues } from "./issues.interface";
 
-// const createIssueIntoDB = async (payLoad: IIssues) => {
-//   console.log(payLoad);
-//   const { title, description, reporter_id, type, status, role } = payLoad;
-//   console.log("Payload:", payLoad);
-//   console.log("Reporter ID:", reporter_id);
+const createIssueIntoDB = async (payload: IIssues) => {
+  // console.log("FULL PAYLOAD:", payload);
 
-//   const user = await pool.query(
-//     `
-//     SELECT * FROM users WHERE id=$1
-//     `,
-//     [reporter_id],
-//   );
-//   console.log(user);
-//   if (user.rows.length === 0) {
-//     throw new Error("User not exists!");
-//   }
+  const { title, description, reporter_id, type } = payload;
 
-//   const result = await pool.query(
-//     `
-//     INSERT INTO issues(title, description, reporter_id, type, status)
-//     VALUES($1,$2,$3,$4,$5) RETURNING *
-//     `,
-//     [title, description, reporter_id, type, status],
-//   );
-//   return result;
-// };
-
-const createIssueIntoDB = async (payload: any) => {
-  console.log("FULL PAYLOAD:", payload);
-
-  const { title, description, reporter_id, type, status } = payload;
-
-  console.log("REPORTER ID:", reporter_id);
+  // console.log("REPORTER ID:", reporter_id);
 
   const user = await pool.query(
     `
@@ -55,23 +28,32 @@ const createIssueIntoDB = async (payload: any) => {
       title,
       description,
       reporter_id,
-      type,
-      status
+      type
     )
-    VALUES($1,$2,$3,$4,$5)
+    VALUES($1,$2,$3,$4)
     RETURNING *
     `,
-    [title, description, reporter_id, type, status],
+    [title, description, reporter_id, type],
   );
-
+  console.log(result);
   return result;
 };
-// const getAllIssuesFromDB = async () => {
-//   const result = await pool.query(`
-//       SELECT * FROM USERS
-//       `);
-//   return result;
-// };
+const getAllIssuesFromDB = async (sort?: string) => {
+  let query = `
+    SELECT * FROM issues
+  `;
+
+  if (sort === "newest") {
+    query += ` ORDER BY created_at DESC`;
+  }
+
+  if (sort === "oldest") {
+    query += ` ORDER BY created_at ASC`;
+  }
+
+  const result = await pool.query(query);
+  return result;
+};
 
 // const getSingleIssueFromDB = async (id: string) => {
 //   const result = await pool.query(
@@ -113,7 +95,7 @@ const createIssueIntoDB = async (payload: any) => {
 
 export const issueService = {
   createIssueIntoDB,
-  // getAllIssuesFromDB,
+  getAllIssuesFromDB,
   // getSingleIssueFromDB,
   // updateAnIssueInDB,
   // deleteAnIssueFromDB,

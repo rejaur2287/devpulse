@@ -11,11 +11,11 @@ router.post(
   auth(User_Role.contributor, User_Role.maintainer),
   issuesController.createIssue,
 );
-// router.get(
-//   "/",
-//   auth(User_Role.contributor, User_Role.maintainer),
-//   issuesController.getAllIssues,
-// );
+router.get(
+  "/",
+  // auth(User_Role.contributor, User_Role.maintainer),
+  issuesController.getAllIssues,
+);
 // router.get("/:id", issuesController.getSingleIssue);
 // router.put("/:id", issuesController.updateAnIssue);
 // router.delete("/:id", issuesController.deleteIssue);
