@@ -16,7 +16,7 @@ const createIssueIntoDB = async (payload: IIssues) => {
     [reporter_id],
   );
 
-  console.log("USER QUERY RESULT:", user.rows);
+  // console.log("USER QUERY RESULT:", user.rows);
 
   if (user.rows.length === 0) {
     throw new Error("User not exists!");
@@ -35,7 +35,7 @@ const createIssueIntoDB = async (payload: IIssues) => {
     `,
     [title, description, reporter_id, type],
   );
-  console.log(result);
+  // console.log(result);
   return result;
 };
 const getAllIssuesFromDB = async (sort?: string) => {
@@ -90,20 +90,20 @@ const updateAnIssueInDB = async (payLoad: IIssues, id: string) => {
   return result;
 };
 
-// const deleteAnIssueFromDB = async (id: string) => {
-//   const result = await pool.query(
-//     `
-//       DELETE FROM users WHERE id=$1
-//       `,
-//     [id],
-//   );
-//   return result;
-// };
+const deleteAnIssueFromDB = async (id: string) => {
+  const result = await pool.query(
+    `
+      DELETE FROM issues WHERE id=$1
+      `,
+    [id],
+  );
+  return result;
+};
 
 export const issueService = {
   createIssueIntoDB,
   getAllIssuesFromDB,
   getSingleIssueFromDB,
   updateAnIssueInDB,
-  // deleteAnIssueFromDB,
+  deleteAnIssueFromDB,
 };

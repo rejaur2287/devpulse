@@ -8,7 +8,6 @@ const createUserIntoDB = async (payLoad: IUser) => {
   const { name, email, password, role } = payLoad;
 
   const hashPassword = await bcrypt.hash(password, 10);
-  // console.log(hashPassword);
 
   const result = await pool.query(
     `
@@ -18,7 +17,7 @@ const createUserIntoDB = async (payLoad: IUser) => {
     `,
     [name, email, hashPassword, role],
   );
-  // console.log(result);
+
   delete result.rows[0].password;
   return result;
 };
@@ -43,15 +42,11 @@ const loginUserIntoDB = async (payLoad: {
   }
   const user = userData.rows[0];
 
-  // console.log(user);
-
   const matchPassword = await bcrypt.compare(password, user.password);
-  // console.log(matchPassword);
+
   if (!matchPassword) {
     throw new Error("Invalid credentials");
   }
-
-  //   Generate Token
 
   const jwtPayload = {
     id: user.id,
@@ -63,8 +58,6 @@ const loginUserIntoDB = async (payLoad: {
   const accessToken = jwt.sign(jwtPayload, config.secret as string, {
     expiresIn: "1d",
   });
-
-  // console.log(accessToken);
 
   delete user.password;
 

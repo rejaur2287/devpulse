@@ -3,8 +3,6 @@ import sendResponse from "../../utility/sendResponse";
 import { authService } from "./auth.service";
 
 const createUser = async (req: Request, res: Response) => {
-  //   console.log(req.body);
-
   try {
     const result = await authService.createUserIntoDB(req.body);
     console.log(result);
@@ -26,11 +24,8 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const loginUser = async (req: Request, res: Response) => {
-  //   console.log(req.body);
-
   try {
     const result = await authService.loginUserIntoDB(req.body);
-    // console.log(result);
 
     sendResponse(res, {
       statusCode: 200,

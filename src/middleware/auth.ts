@@ -6,7 +6,6 @@ import type { ROLES } from "../types";
 
 const auth = (...roles: ROLES[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    // console.log(roles);
     try {
       // console.log("This is protected Route");
       // console.log(req.headers.authorization);
@@ -16,7 +15,8 @@ const auth = (...roles: ROLES[]) => {
       //* 4. If the user active or not
 
       const token = req.headers.authorization;
-      console.log(token);
+
+      // console.log(token);
       if (!token) {
         res.status(401).json({
           success: false,
@@ -28,7 +28,6 @@ const auth = (...roles: ROLES[]) => {
         token as string,
         config.secret as string,
       ) as JwtPayload;
-      // console.log(decoded);
 
       const userData = await pool.query(
         `
@@ -36,9 +35,8 @@ const auth = (...roles: ROLES[]) => {
         `,
         [decoded.email],
       );
-      // console.log(userData);
+
       const user = userData.rows[0];
-      // console.log(user);
 
       if (userData.rows.length === 0) {
         res.status(404).json({
@@ -46,8 +44,6 @@ const auth = (...roles: ROLES[]) => {
           message: "User Not Found!!",
         });
       }
-
-      // console.log("Auth Role :", user.role);
 
       if (roles.length && !roles.includes(user.role)) {
         res.status(403).json({
@@ -57,6 +53,7 @@ const auth = (...roles: ROLES[]) => {
       }
 
       req.user = decoded;
+      // req.body.reporter_id = decoded.id;
 
       next();
     } catch (error) {
