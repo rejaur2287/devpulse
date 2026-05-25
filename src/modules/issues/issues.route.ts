@@ -1,0 +1,23 @@
+import { Router } from "express";
+import { issuesController } from "./issues.controller";
+
+import auth from "../../middleware/auth";
+import { User_Role } from "../../types";
+
+const router = Router();
+
+router.post(
+  "/",
+  auth(User_Role.contributor, User_Role.maintainer),
+  issuesController.createIssue,
+);
+// router.get(
+//   "/",
+//   auth(User_Role.contributor, User_Role.maintainer),
+//   issuesController.getAllIssues,
+// );
+// router.get("/:id", issuesController.getSingleIssue);
+// router.put("/:id", issuesController.updateAnIssue);
+// router.delete("/:id", issuesController.deleteIssue);
+
+export const issuesRoute = router;

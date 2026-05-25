@@ -1,4 +1,4 @@
-import jwt, { type JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { pool } from "../../db";
 import type { IUser } from "./auth.interface";
@@ -12,7 +12,7 @@ const createUserIntoDB = async (payLoad: IUser) => {
 
   const result = await pool.query(
     `
-    INSERT INTO users(name, email, password,role)
+    INSERT INTO users(name, email, password, role)
     VALUES ($1,$2,$3,$4)
     RETURNING *
     `,

@@ -13,7 +13,7 @@ export const initDB = async () => {
       name VARCHAR(40),
       email VARCHAR(40) UNIQUE NOT NULL,
       password TEXT NOT NULL,
-      role VARCHAR(20) DEFAULT 'user',
+      role VARCHAR(20) DEFAULT 'contributor',
 
       created_at TIMESTAMP DEFAULT NOW(),
       updated_at TIMESTAMP DEFAULT NOW()
@@ -22,7 +22,7 @@ export const initDB = async () => {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS issues(
       id SERIAL PRIMARY KEY,
-      reporter_id INT UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+      reporter_id INT REFERENCES users(id) ON DELETE CASCADE,
 
       title TEXT,
       description TEXT,
