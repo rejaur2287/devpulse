@@ -56,6 +56,7 @@ const getSingleIssue = async (req: Request, res: Response) => {
         data: {},
       });
     }
+
     res.status(200).json({
       success: true,
       message: `Issue ${id} retrieved successfully.`,

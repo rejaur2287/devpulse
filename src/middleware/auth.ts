@@ -42,6 +42,7 @@ const auth = (...roles: ROLES[]) => {
         res.status(404).json({
           success: false,
           message: "User Not Found!!",
+          error: Error,
         });
       }
 
