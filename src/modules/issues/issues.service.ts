@@ -43,19 +43,20 @@ const getAllIssuesFromDB = async (sort?: string) => {
     SELECT * FROM issues
   `;
 
-  if (sort === "newest") {
-    query += ` ORDER BY created_at DESC`;
-  }
-
-  if (sort === "oldest") {
-    query += ` ORDER BY created_at ASC`;
-  }
   if (sort === "bug") {
     query += ` WHERE type = 'bug'`;
   }
 
   if (sort === "feature_request") {
     query += ` WHERE type = 'feature_request'`;
+  }
+
+  if (sort === "newest") {
+    query += ` ORDER BY created_at DESC`;
+  }
+
+  if (sort === "oldest") {
+    query += ` ORDER BY created_at ASC`;
   }
 
   const result = await pool.query(query);
